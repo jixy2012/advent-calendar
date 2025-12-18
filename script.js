@@ -1,7 +1,7 @@
 const PATIENCE_MESSAGE = "Be patient! This door isn't ready to open yet.";
 
 // Set to true to disable date checking (for testing)
-const DISABLE_DATE_CHECK = false;
+const DISABLE_DATE_CHECK = true;
 
 // Check if a door can be opened based on current date
 function canOpenDoor(day) {
