@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advent Calendar - Login</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2d1a 0%, #1a472a 30%, #2d5a3f 50%, #1a472a 70%, #0f2d1a 100%);
+      font-family: 'Georgia', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Snowflakes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 50px 50px, white, transparent),
+        radial-gradient(1px 1px at 80px 10px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 130px 20px, white, transparent),
+        radial-gradient(1px 1px at 160px 80px, rgba(255,255,255,0.7), transparent);
+      background-size: 200px 200px, 300px 250px, 250px 200px, 350px 300px, 400px 350px, 450px 400px;
+      background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 300px 150px, 200px 300px;
+      animation: snowfall 20s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes snowfall {
+      0% {
+        background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 300px 150px, 200px 300px;
+      }
+      100% {
+        background-position: 0 200px, 40px 260px, 130px 470px, 70px 300px, 300px 350px, 200px 500px;
+      }
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Mountains of Christmas', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-style: italic;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      text-align: center;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    input[type="password"]::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    input[type="password"]:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-family: 'Mountains of Christmas', cursive;
+      background: linear-gradient(135deg, #c41e3a, #a01728);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(196, 30, 58, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .error {
+      color: #ffcccc;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .error.show {
+      display: block;
+      animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 3;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>🎄 Advent Calendar 🎄</h1>
+    <p class="subtitle">Enter password to unlock</p>
+    
+    <form id="loginForm">
+      <div class="input-group">
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Enter password" 
+          autocomplete="off"
+          required
+        >
+      </div>
+      <button type="submit">Unlock Calendar</button>
+      <p class="error" id="error">Incorrect password. Try again!</p>
+    </form>
+  </div>
+
+  <script>
+    const correctPassword = 'xiaoxiaobao'; // Change this to your desired password
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('error');
+      
+      if (password === correctPassword) {
+        // Store authentication in sessionStorage
+        sessionStorage.setItem('authenticated', 'true');
+        // Redirect to main calendar
+        window.location.href = 'index.html';
+      } else {
+        // Show error
+        errorMsg.classList.add('show');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          errorMsg.classList.remove('show');
+        }, 3000);
+      }
+    });
+
+    // Add some falling snowflakes
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerHTML = '❄';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.opacity = Math.random();
+      document.body.appendChild(snowflake);
+      
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    setInterval(createSnowflake, 300);
+  </script>
+</body>
+</html>
+

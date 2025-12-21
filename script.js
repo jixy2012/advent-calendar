@@ -1,3 +1,8 @@
+// Check authentication on page load
+if (!sessionStorage.getItem('authenticated')) {
+  window.location.href = 'login.html';
+}
+
 const PATIENCE_MESSAGE = "Be patient! This door isn't ready to open yet.";
 
 // Set to true to disable date checking (for testing)
